@@ -3,7 +3,6 @@ angular.module('flapperNews')
     'use strict';
 
     $scope.posts = PostFactory.posts;
-    var currId = 0;
 
     $scope.addPost = function () {
       if (!$scope.title || $scope.title === '') { return; }
@@ -12,7 +11,6 @@ angular.module('flapperNews')
         title: $scope.title,
         upvotes: 0,
         link: $scope.link,
-        id: currId,
         comments: [
           {author: 'Man', body: 'I hate things!', upvotes: 0},
           {author: 'Woman', body: 'Cool!', upvotes: 12}
@@ -20,7 +18,6 @@ angular.module('flapperNews')
       });
       $scope.title = '';
       $scope.link = '';
-      currId++;
     };
 
     $scope.incrementUpvotes = function (post) {
