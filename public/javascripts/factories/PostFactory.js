@@ -1,5 +1,5 @@
 angular.module('flapperNews')
-  .factory('PostFactory', ['$http', function PostFactory ($http) {
+  .factory('PostFactory', ['$http', 'AuthFactory', function PostFactory ($http, AuthFactory) {
     var exports = {};
 
     exports.posts = [];
@@ -11,16 +11,19 @@ angular.module('flapperNews')
     };
 
     exports.create = function(post) {
-      return $http.post('/posts', post).success(function(data) {
+      return $http.post('/posts', post, {
+        headers: {Authorization: 'Bearer'+ AuthFactory.getToken()}
+      }).success(function(data) {
         exports.posts.push(data);
       });
     };
 
     exports.upvote = function(post) {
-      return $http.put('/posts/' + post._id + '/upvote')
-        .success(function(data) {
-          post.upvotes += 1;
-        });
+      return $http.put('/posts/' + post._id + '/upvote', null, {
+        headers: {Authorization: 'Bearer' + AuthFactory.getToken()}
+      }).success(function(data) {
+        post.upvotes += 1;
+      });
     };
 
     exports.get = function(id) {
@@ -30,14 +33,17 @@ angular.module('flapperNews')
     };
 
     exports.addComment = function(id, comment) {
-      return $http.post('/posts/' + id + '/comments', comment);
+      return $http.post('/posts/' + id + '/comments', comment, {
+        headers: {Authorization: 'Bearer' + AuthFactory.getToken()}
+      });
     };
 
     exports.upvoteComment = function(post, comment) {
-      return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote')
-        .success(function(data) {
-          comment.upvotes += 1;
-        });
+      return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
+        headers: {Authorization: 'Bearer' + AuthFactory.getToken()}
+      }).success(function(data) {
+        comment.upvotes += 1;
+      });
     };
 
     return exports;

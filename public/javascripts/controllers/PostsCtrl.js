@@ -1,8 +1,10 @@
 angular.module('flapperNews')
-  .controller('PostsCtrl', function PostsCtrl ($scope, PostFactory, post) {
+  .controller('PostsCtrl', function PostsCtrl ($scope, PostFactory, AuthFactory, post) {
     'use strict';
 
     $scope.post = post;
+
+    $scope.isLoggedIn = AuthFactory.isLoggedIn();
 
     $scope.addComment = function () {
       if ($scope.body === '') { return; }
