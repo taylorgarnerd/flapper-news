@@ -22,6 +22,16 @@ angular.module('flapperNews', [
             return posts.get($stateParams.id);
           }]
         }
+      })
+      .state('login', {
+        url: '/login',
+        templateUrl: 'views/login.html',
+        controller: 'AuthCtrl'
+      })
+      .state('register', {
+        url: '/register',
+        templateUrl: 'views/register.html',
+        controller: 'AuthCtrl'
       });
 
       $urlRouterProvider
