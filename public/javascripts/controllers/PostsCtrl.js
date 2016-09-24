@@ -4,7 +4,7 @@ angular.module('flapperNews')
 
     $scope.post = post;
 
-    $scope.isLoggedIn = AuthFactory.isLoggedIn();
+    $scope.isLoggedIn = AuthFactory.isLoggedIn;
 
     $scope.addComment = function () {
       if ($scope.body === '') { return; }
