@@ -18,7 +18,7 @@ angular.module('flapperNews')
         AuthFactory.logIn($scope.user).error(function(error) {
           $scope.error = error;
         }).then(function() {
-          state.go('home');
+          $state.go('home');
         });
       }
     }

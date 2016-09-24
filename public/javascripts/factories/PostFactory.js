@@ -12,7 +12,7 @@ angular.module('flapperNews')
 
     exports.create = function(post) {
       return $http.post('/posts', post, {
-        headers: {Authorization: 'Bearer'+ AuthFactory.getToken()}
+        headers: {Authorization: 'Bearer '+ AuthFactory.getToken()}
       }).success(function(data) {
         exports.posts.push(data);
       });
@@ -20,9 +20,11 @@ angular.module('flapperNews')
 
     exports.upvote = function(post) {
       return $http.put('/posts/' + post._id + '/upvote', null, {
-        headers: {Authorization: 'Bearer' + AuthFactory.getToken()}
+        headers: {Authorization: 'Bearer ' + AuthFactory.getToken()}
       }).success(function(data) {
         post.upvotes += 1;
+      }).error(function(data, status) {
+        console.error('->', status, data);
       });
     };
 
@@ -34,13 +36,13 @@ angular.module('flapperNews')
 
     exports.addComment = function(id, comment) {
       return $http.post('/posts/' + id + '/comments', comment, {
-        headers: {Authorization: 'Bearer' + AuthFactory.getToken()}
+        headers: {Authorization: 'Bearer ' + AuthFactory.getToken()}
       });
     };
 
     exports.upvoteComment = function(post, comment) {
       return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
-        headers: {Authorization: 'Bearer' + AuthFactory.getToken()}
+        headers: {Authorization: 'Bearer ' + AuthFactory.getToken()}
       }).success(function(data) {
         comment.upvotes += 1;
       });

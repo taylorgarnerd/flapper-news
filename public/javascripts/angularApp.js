@@ -26,12 +26,22 @@ angular.module('flapperNews', [
       .state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
-        controller: 'AuthCtrl'
+        controller: 'AuthCtrl',
+        onEnter: ['$state', 'AuthFactory', function($state, AuthFactory) {
+          if(AuthFactory.isLoggedIn()) {
+            $state.go('home');
+          }
+        }]
       })
       .state('register', {
         url: '/register',
         templateUrl: 'views/register.html',
-        controller: 'AuthCtrl'
+        controller: 'AuthCtrl',
+        onEnter: ['$state', 'AuthFactory', function($state, AuthFactory) {
+          if(AuthFactory.isLoggedIn()) {
+            $state.go('home');
+          }
+        }]
       });
 
       $urlRouterProvider

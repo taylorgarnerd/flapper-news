@@ -12,7 +12,7 @@ angular.module('flapperNews')
 
     auth.isLoggedIn = function() {
       var token = auth.getToken();
-
+      
       if (token) {
         var payload = JSON.parse($window.atob(token.split('.')[1]));
 
@@ -32,9 +32,13 @@ angular.module('flapperNews')
     };
 
     auth.register = function(user) {
-      return $http.post('/register', user).success(function(data) {
-        auth.saveToken(data.token);
-      });
+      return $http.post('/register', user)
+        .success(function(data) {
+          auth.saveToken(data.token);
+        })
+        .error(function(data, status) {
+          console.error('->', status, data);
+        });
     };
 
     auth.logIn = function(user) {
